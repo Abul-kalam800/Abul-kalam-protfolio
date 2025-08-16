@@ -1,32 +1,31 @@
 import React from "react";
 import hero from '../assets/kalam-hero-section.png';
+import cv from '../assets/Resume-kalam.pdf'
 
 const Hero = () => {
   return (
-    <section className="bg-base-200 min-h-screen flex items-center" id="home">
+    <section className="bg-base-50 min-h-screen flex items-center" id="home">
       <div className="container mx-auto px-6 flex flex-col-reverse md:flex-row items-center gap-10">
         {/* Left Content */}
         <div className="flex-1 text-center md:text-left">
           <h1 className="text-4xl md:text-6xl font-bold text-primary">
             Hi, I'm <span className="text-secondary">Mohammad Abul Kalam</span>
           </h1>
-          <p className="mt-6 text-lg md:text-xl text-gray-600 max-w-lg">
+          <p className="mt-6 text-lg md:text-xl  max-w-lg">
             I'm a passionate{" "}
-            <span className="font-semibold">Frontend Developer</span>
-            who loves building beautiful and functional websites with modern
+            <span className="font-semibold text-primary">Frontend Developer </span>
+           I loves building beautiful and functional websites with modern
             technologies like React, Tailwind CSS, and more.
           </p>
           <div className="mt-6 flex flex-col sm:flex-row gap-4 justify-center md:justify-start">
             <a
-              href={''}
-              download=" "
+              href={cv}
+              download="Resume-kalam.pdf"
               className="btn btn-primary"
             >
               Download CV
             </a>
-            <a href="#contact" className="btn btn-outline btn-secondary">
-              Contact Me
-            </a>
+            
           </div>
         </div>
 

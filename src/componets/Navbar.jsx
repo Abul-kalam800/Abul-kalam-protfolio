@@ -1,10 +1,11 @@
 import React from "react";
 import { Link } from "react-router";
 import { HashLink } from "react-router-hash-link";
+import cv from '../assets/Resume-kalam.pdf'
 
 const Navbar = () => {
   return (
-    <div className="navbar bg-base-100 shadow-sm fixed top-0 mx-0 mb-20">
+    <div className="navbar bg-base-300 shadow-sm fixed top-0 mx-0 mb-20 md:px-30 left-0 right-0">
       <div className="navbar-start">
         <div className="dropdown">
           <div tabIndex={0} role="button" className="btn btn-ghost lg:hidden">
@@ -48,7 +49,10 @@ const Navbar = () => {
             </HashLink>
           </ul>
         </div>
-        <a className="btn btn-ghost text-xl">Abul-Kalam</a>
+        <a className="btn btn-ghost text-xl">
+          <span className="text-primary">Abul</span>
+          <span className="text-secondary">-Kalam</span>
+        </a>
       </div>
       <div className="navbar-center hidden lg:flex">
         <ul className="menu menu-horizontal px-1 flex justify-center gap-7">
@@ -73,7 +77,9 @@ const Navbar = () => {
         </ul>
       </div>
       <div className="navbar-end">
-        <a className="btn">Resume</a>
+        <a href={cv} download="Resume-kalam.pdf" className="btn btn-primary">
+          Resume
+        </a>
       </div>
     </div>
   );

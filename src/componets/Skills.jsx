@@ -23,17 +23,17 @@ const Skills = () => {
   ];
 
   return (
-    <section className="bg-gray-50 py-12 px-6 lg:px-20" id="skills">
-      <div className="max-w-6xl mx-auto">
-        <h2 className="text-4xl font-bold text-gray-800 mb-10 text-center">Skills</h2>
+    <section className=" py-12 px-6 lg:px-20" id="skills">
+      <div className="max-w-6xl mx-auto bg-base-200">
+        <h2 className="text-4xl font-bold  mb-10 text-center">Skills</h2>
         <div className="grid gap-6 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4">
           {myskills.map((skill, index) => (
             <div
               key={index}
-              className="bg-white p-6 rounded-xl shadow hover:shadow-lg flex flex-col items-center transition-shadow duration-300"
+              className=" p-6 rounded-xl shadow hover:shadow-lg flex flex-col items-center transition-shadow duration-300"
             >
               {skill.icon}
-              <p className="mt-3 text-lg font-semibold text-gray-700">{skill.name}</p>
+              <p className="mt-3 text-lg font-semibold ">{skill.name}</p>
             </div>
           ))}
         </div>

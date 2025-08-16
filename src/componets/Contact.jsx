@@ -1,107 +1,125 @@
 import React, { useState } from "react";
-import axios from "axios";
+import emailjs from "@emailjs/browser";
+import { Mail, Phone, MessageCircle } from "lucide-react";
+import Swal from "sweetalert2";
 
 const Contact = () => {
-  const [formData, setFormData] = useState({
-    name: "",
-    email: "",
-    message: "",
-  });
-  const [status, setStatus] = useState("");
+  const [name, setName] = useState("");
+  const [email, setEmail] = useState("");
+  const [message, setMessage] = useState("");
 
-  const handleChange = (e) => {
-    setFormData({ ...formData, [e.target.name]: e.target.value });
-  };
-
-  const handleSubmit = async (e) => {
+  const sendEmail = (e) => {
     e.preventDefault();
-    try {
-      await axios.post("http://localhost:5000/api/contact", formData);
-      setStatus("✅ Message sent successfully!");
-      setFormData({ name: "", email: "", message: "" });
-    } catch (error) {
-      setStatus("❌ Error sending message.");
-    }
+    const serviceID = import.meta.env.VITE_EMAIL_SERVICE_ID;
+    const templateID = import.meta.env.VITE_EMAIL_TEMPLATE_ID;
+    const publicKey = import.meta.env.VITE_PUBLIC_KEY;
+    // emailjs.send(serviceID, templateID, templateParams, options);
+    const templateParams = {
+      form_name: name,
+      form_email: email,
+      to_name: "abul_kalam_web",
+      message: message,
+    };
+
+    emailjs.send(serviceID, templateID, templateParams, publicKey).then(
+      (result) => {
+     
+        setEmail("");
+        setName("");
+        setMessage("");
+       
+        if (result.status == 200) {
+          Swal.fire({
+            position: "top-end",
+            icon: "success",
+            title: "Your mail has been successfully send",
+            showConfirmButton: false,
+            timer: 1500,
+          });
+        }
+      },
+      (error) => {
+        alert("Something went wrong, please try again!");
+        console.log(error);
+      }
+    );
   };
 
   return (
-    <section
-      className= "py-12 px-6 lg:px-20"
-      style={{
-        backgroundImage:
-          "url('https://i.postimg.cc/jqZv0wZQ/contact.jpg')",
-          backgroundPosition:'center',
-          backgroundRepeat:'no-repeat',
-          backgroundSize:'cover'
-      }}
-    >
-      <div className="max-w-4xl mx-auto" id="contact">
-        <h2 className="text-4xl font-bold  mb-8 text-center">
-          Contact Me
-        </h2>
-
-        <form
-          onSubmit={handleSubmit}
-          className="bg-transparent p-8 rounded-xl shadow-lg space-y-6"
-        >
-          <div>
-            <label className="block  font-medium mb-2">Name</label>
-            <input
-              type="text"
-              name="name"
-              value={formData.name}
-              onChange={handleChange}
-              placeholder="Your Name"
-              className="w-full p-3 border text-black bg-gray-200 rounded-lg focus:ring-2 focus:ring-blue-500"
-              required
-            />
+    <div className="min-h-screen bg-base-100 flex items-center justify-center p-6">
+      <div className="max-w-6xl mx-auto w-full grid md:grid-cols-2 gap-8 bg-base-200 shadow-lg rounded-2xl p-8">
+        {/* Contact Info */}
+        <div className="space-y-6">
+          <h2 className="text-3xl font-bold">Contact Me</h2>
+          <p className="">
+            Feel free to reach out via the form or through my contact info
+            below.
+          </p>
+          <div className="space-y-4">
+            <div className="flex items-center gap-3">
+              <Mail className="text-blue-600" />
+              <span className="">bd.abulkalam@gmail.com</span>
+            </div>
+            <div className="flex items-center gap-3">
+              <Phone className="text-green-600" />
+              <span className="">+974 55100368</span>
+            </div>
+            <div className="flex items-center gap-3">
+              <MessageCircle className="text-green-500" />
+              <a
+                href="https://wa.me/1234567890"
+                target="_blank"
+                rel="noopener noreferrer"
+                className=" hover:underline"
+              >
+                Chat on WhatsApp
+              </a>
+            </div>
           </div>
+        </div>
 
-          <div>
-            <label className="block text-white font-medium mb-2">
-              Email
-            </label>
-            <input
-              type="email"
-              name="email"
-              value={formData.email}
-              onChange={handleChange}
-              placeholder="Your Email"
-              className="w-full p-3 border text-black bg-gray-200 rounded-lg focus:ring-2 focus:ring-blue-500"
-              required
-            />
-          </div>
-
-          <div>
-            <label className="block  font-medium mb-2">
-              Message
-            </label>
-            <textarea
-              name="message"
-              value={formData.message}
-              onChange={handleChange}
-              placeholder="Your Message"
-              rows="5"
-              className="w-full p-3 border text-black bg-gray-200 rounded-lg focus:ring-2 focus:ring-blue-500"
-              required
-            ></textarea>
-          </div>
-
-          <div className="text-center">
-            <button
-              type="submit"
-              className="px-6 py-3 bg-blue-600 text-white font-semibold rounded-lg hover:bg-blue-700 transition"
-            >
-              Send Message
-            </button>
-          </div>
-
-          {status && (
-            <p className="text-center text-green-600 mt-4">{status}</p>
-          )}
+        {/* Contact Form */}
+        <form onSubmit={sendEmail} className="space-y-4">
+          <input
+            type="text"
+            value={name}
+            onChange={(e) => {
+              setName(e.target.value);
+            }}
+            placeholder="Your Name"
+            required
+            className="w-full p-3 border rounded-lg focus:ring-2 focus:ring-blue-500"
+          />
+          <input
+            type="email"
+            value={email}
+            onChange={(e) => {
+              setEmail(e.target.value);
+            }}
+            placeholder="Your Email"
+            required
+            className="w-full p-3 border rounded-lg focus:ring-2 focus:ring-blue-500"
+          />
+          <textarea
+            placeholder="Your Message"
+            value={message}
+            onChange={(e) => {
+              setMessage(e.target.value);
+            }}
+            rows="5"
+            cols="20"
+            required
+            className="w-full p-3 border rounded-lg focus:ring-2 focus:ring-blue-500"
+          ></textarea>
+          <button
+            type="submit"
+            className="w-full cursor-pointer bg-blue-600 text-white py-3 rounded-lg hover:bg-blue-700 transition"
+          >
+            Send Message
+          </button>
         </form>
       </div>
-    </section>
+    </div>
   );
 };
 
